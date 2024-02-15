@@ -1,5 +1,5 @@
 ---
-title: "Tipos de variables"
+title: "Introducción a la Estadística en Salud Pública"
 author: "Pablo de la Cuesta García"
 date: "2024-02-01"
 output: pdf_document
@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Apuntes de Estadística: Fundamentos para la Investigación en Salud Pública
+# Fundamentos para la Investigación en Salud Pública
 
 En la introducción a nuestro curso sobre estadísticas aplicadas a la salud pública, abordamos la importancia crítica del pensamiento estadístico en la investigación. A través de un ejemplo histórico sobre la epidemia de cólera en la Inglaterra del siglo XIX, destacamos cómo errores en el análisis e interpretación de datos pueden tener consecuencias fatales. Este caso subraya la necesidad de un enfoque metódico y basado en principios estadísticos para superar los retos en la investigación científica.
 

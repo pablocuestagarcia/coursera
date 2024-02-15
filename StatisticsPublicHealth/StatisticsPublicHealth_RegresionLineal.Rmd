@@ -1,0 +1,155 @@
+---
+title: "Regresión Lineal"
+author: "Pablo de la Cuesta García"
+date: "2024-02-07"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Regresión lineal
+
+## Introducción
+
+El foco de estudio será comprender en primer lugar que es la correlación, avanzar hacia la regresión lineal simple y finalmente llegar a la regresión lineal múltiple. Al finalizar se habrá adquirido un entendimiento profundo de cómo formular preguntas de investigación, desarrollar modelos estadísticamente sólidos, e interpretar los resultados para informar decisiones en el ámbito de la salud pública.
+
+## Objetivos
+
+Aprender a cómo desarrollar, ajustar, e interpretar modelos de regresión lineal, aplicándolos a la investigación en salud pública para:
+
+- Evaluar la eficacia de intervenciones.
+- Entender las causas de diversas enfermedades.
+- Predecir resultados de salud futuros.
+
+
+## Correlación
+
+La correlación es un concepto estadístico fundamental que mide el grado de asociación entre dos variables. Este concepto es esencial para entender las relaciones lineales en los datos y se diferencia de la regresión lineal en que la correlación no implica causalidad sino que simplemente indica si existe o no una asociación.
+
+### Correlación de Pearson
+
+El coeficiente de correlación de Pearson es una medida estadística que nos sirve para cuantificar la relación lineal entre dos variables. Este coeficiente varía entre $-1$ y $1$, donde:
+
+- $1$ indica una relación lineal positiva perfecta.
+- $-1$ indica una relación lineal negativa perfecta.
+- $0$ indica que no hay relación lineal.
+
+```{r}
+# Instalando y cargando el paquete necesario
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+
+# Estableciendo la semilla para reproducibilidad
+set.seed(0)
+
+# Generando datos simulados
+fev1 <- runif(10, min = 1.5, max = 3.5)  # FEV1 en litros
+calidad_vida <- runif(10, min = 10, max = 100)  # Puntuación de calidad de vida
+
+# Creando un dataframe con los datos
+datos <- data.frame(FEV1 = fev1, CalidadVida = calidad_vida)
+
+# Graficando con ggplot2
+ggplot(datos, aes(x = FEV1, y = CalidadVida)) +
+  geom_point(color = 'blue', size = 3, alpha = 0.7) +  # Añadiendo los puntos
+  labs(title = "Relación entre Calidad de Vida y Función Pulmonar (FEV1)",
+       x = "FEV1 (litros)",
+       y = "Calidad de Vida (Puntuación)") +
+  theme_minimal() +  # Utilizando un tema minimalista
+  theme(plot.title = element_text(hjust = 0.5))  # Centrando el título
+```
+
+El gráfico anterior ilustra la relación entre la calidad de vida y la función pulmonar (FEV1) en una cohorte de pacientes con enfermedad pulmonar obstructiva crónica (EPOC). Este tipo de análisis visual es crucial para identificar patrones preliminares en los datos, como tendencias o agrupaciones, que pueden sugerir una asociación entre las dos variables.
+
+### Condiciones para la validez de la correlación de Pearson
+
+Para que el cálculo del coeficiente de Pearson sea válido, deben cumplirse tres condiciones:
+
+1. Ambas variables deben ser continuas y provienen de una muestra aleatoria.
+2. Al menos una variable debe distribuirse normalmente, aunque es preferible que ambas lo hagan.
+3. La normalidad se puede inspeccionar visualmente mediante un gráfico de dispersión, buscando una distribución aproximadamente elíptica de los puntos alrededor de la línea de mejor ajuste.
+
+### Correlación y causalidad
+
+La correlación entre dos variables no implica una relación causal directa. Existen muchos ejemplos de correlaciones espurias para enfatizar cómo factores externos pueden influir en las asociaciones observadas.
+
+
+### Ejemplos de regresiones lineales
+
+```{r}
+# Cargar el paquete ggplot2
+library(ggplot2)
+
+# Establecer semilla para reproducibilidad
+set.seed(0)
+
+# Datos para correlación positiva fuerte
+x_pos_fuerte <- seq(0, 10, length.out = 30)
+y_pos_fuerte <- x_pos_fuerte + rnorm(30, 0, 1)
+
+# Datos para correlación negativa moderada
+x_neg_moderada <- seq(0, 10, length.out = 30)
+y_neg_moderada <- -x_neg_moderada + rnorm(30, 0, 2)
+
+# Datos para relación no lineal (correlación cero)
+x_no_lineal <- seq(0, 10, length.out = 30)
+y_no_lineal <- sin(x_no_lineal)
+
+# Crear data.frames
+df_pos_fuerte <- data.frame(x = x_pos_fuerte, y = y_pos_fuerte)
+df_neg_moderada <- data.frame(x = x_neg_moderada, y = y_neg_moderada)
+df_no_lineal <- data.frame(x = x_no_lineal, y = y_no_lineal)
+
+# Gráfico de correlación positiva fuerte
+ggplot(df_pos_fuerte, aes(x = x, y = y)) +
+  geom_point(color = 'blue') +
+  geom_smooth(method = "lm", se = FALSE, color = 'red') +
+  ggtitle("Correlación Positiva Fuerte (r ~ 0.85)") +
+  theme_minimal()
+
+# Gráfico de correlación negativa moderada
+ggplot(df_neg_moderada, aes(x = x, y = y)) +
+  geom_point(color = 'red') +
+  geom_smooth(method = "lm", se = FALSE, color = 'blue') +
+  ggtitle("Correlación Negativa Moderada (r ~ -0.5)") +
+  theme_minimal()
+
+# Gráfico de relación no lineal (correlación cero)
+ggplot(df_no_lineal, aes(x = x, y = y)) +
+  geom_point(color = 'green') +
+  ggtitle("Relación No Lineal (r ~ 0)") +
+  theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
